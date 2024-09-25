@@ -1,5 +1,5 @@
 require("dotenv").config();
-const JWT = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const { User } = require("../config/db");
 const zod = require("zod");
 
@@ -26,8 +26,7 @@ const userZodSchema = zod.object({
 
 // Function to generate a JWT token
 const generateToken = (id) => {
-  return JWT.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
-};
+  return jwt.sign({ id}, process.env.JWT_SECRET, {expiresIn: '3d' })};
 
 // Signup function
 const SignUp = async (req, res) => {
@@ -58,7 +57,7 @@ const SignUp = async (req, res) => {
     res.status(201).json({
       message: "User created successfully",
       user: { username, email }, // Do not expose the password
-      token,
+      token : `Bearer ${token}`
     });
   } catch (e) {
     console.error("Error signing up user:", e);
@@ -66,4 +65,4 @@ const SignUp = async (req, res) => {
   }
 };
 
-module.exports = { SignUp };
+module.exports = { SignUp, generateToken};
