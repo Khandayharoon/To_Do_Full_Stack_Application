@@ -31,7 +31,7 @@ function Foreground() {
     >
       {/* <Card /> */}
       {data.map((item, index) => (
-        <Card data={item} reference={ref} />
+        <Card key={index} data={item} reference={ref} />
       ))}
     </div>
   );

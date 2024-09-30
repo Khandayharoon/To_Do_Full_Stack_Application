@@ -2,6 +2,7 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const { User } = require("../config/db");
 const zod = require("zod");
+const bcrypt = require("bcryptjs");
 
 // User validation schema
 const userZodSchema = zod.object({
@@ -26,7 +27,8 @@ const userZodSchema = zod.object({
 
 // Function to generate a JWT token
 const generateToken = (id) => {
-  return jwt.sign({ id}, process.env.JWT_SECRET, {expiresIn: '3d' })};
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "3d" });
+};
 
 // Signup function
 const SignUp = async (req, res) => {
@@ -47,17 +49,24 @@ const SignUp = async (req, res) => {
       return res.status(400).json({ message: "User already exists." });
     }
 
-    // Create a new user
-    const newUser = await User.create({ username, email, password });
+    // Hash the password before saving
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create a new user with hashed password
+    const newUser = await User.create({
+      username,
+      email,
+      password: hashedPassword,
+    });
 
     // Generate a JWT token
     const token = generateToken(newUser._id);
 
     // Send response with user details and token
-    res.status(201).json({
+    res.status(200).json({
       message: "User created successfully",
       user: { username, email }, // Do not expose the password
-      token : `Bearer ${token}`
+      token: `Bearer ${token}`,
     });
   } catch (e) {
     console.error("Error signing up user:", e);
@@ -65,4 +74,4 @@ const SignUp = async (req, res) => {
   }
 };
 
-module.exports = { SignUp, generateToken};
+module.exports = { SignUp, generateToken };
