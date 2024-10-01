@@ -40,10 +40,14 @@ const Login = async (req, res) => {
     console.log("verfied ", verfied);
     if (user && verfied) {
       const token = generateToken(user._id);
-      res.cookie("token", token);
-      // res.cookie("token", token, {
-      //   id: user._id,
-      // });
+      // res.cookie("token", token);
+      res.cookie("token", token, {
+        httpOnly: true, // Makes the cookie accessible only by the server, not via JS
+        secure: process.env.NODE_ENV === "production", // Enables secure flag only in production (HTTPS)
+        sameSite: "None", // Allows cross-origin requests (important for cookies from different domains/ports)
+        path: "/",
+        expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
+      });
       return res.status(200).json({
         user: {
           username,
@@ -56,6 +60,5 @@ const Login = async (req, res) => {
     res.status(401).json({ message: "Invalid email or password" });
   }
 };
-
 
 module.exports = { Login };

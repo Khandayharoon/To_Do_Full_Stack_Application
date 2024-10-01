@@ -1,25 +1,35 @@
-const express = require('express');
-const { connectDB } = require('./config/db');
-const signUpRoute = require('./routes/signUpRoute');
-const LoginRoute = require('./routes/LoginRoute');
-const TodoRoutes = require('./routes/TodoRoutes');
-const cookieParser = require('cookie-parser')
-const cors = require('cors');
-require('dotenv').config();
+const express = require("express");
+const { connectDB } = require("./config/db");
+const signUpRoute = require("./routes/signUpRoute");
+const LoginRoute = require("./routes/LoginRoute");
+const TodoRoutes = require("./routes/TodoRoutes");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+require("dotenv").config();
+
 const PORT = process.env.PORT || 3000;
 
+// CORS Options
+const corsOptions = {
+  origin: "http://localhost:5173", // Your React app's URL
+  credentials: true, // Allow credentials (cookies) to be sent
+};
+
 const app = express();
-app.use(cookieParser())
+
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions)); // Use the configured CORS options
+app.use(cookieParser());
+// Connect to the database
 connectDB();
 
-app.use('/api/v1/signup', signUpRoute); 
-app.use('/api/v1/login', LoginRoute); 
-app.use('/api/v1/createtodo', TodoRoutes);
-app.use('/api/v1/gettodo', TodoRoutes);
+// Set up routes
+app.use("/api/v1/signup", signUpRoute);
+app.use("/api/v1/login", LoginRoute);
+app.use("/api/v1/createtodo", TodoRoutes);
+app.use("/api/v1/gettodo", TodoRoutes);
 
-
+// Start the server
 app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}/api/v1/`);
+  console.log(`Server running at http://localhost:${PORT}/api/v1/`);
 });
