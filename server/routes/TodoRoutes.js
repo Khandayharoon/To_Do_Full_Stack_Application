@@ -9,4 +9,12 @@ router.post("/", authenticated, createTodo);
 
 router.get("/", authenticated, gettodos);
 
+
 module.exports = router;
+
+
+// {
+//     "username" : "Haroon",
+//     "email" : "haroon@gmail.com",
+//     "password" : "HK1234sufi@3"
+// }

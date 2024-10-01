@@ -76,7 +76,7 @@ function Signup() {
             className="py-4 indent-6 outline-none rounded-md text-lg"
             placeholder="Password..."
             required
-            type="password" // Use type="password" to mask input
+            // type="password" // Use type="password" to mask input
             value={password}
             onChange={handlePasswordChange}
           />
