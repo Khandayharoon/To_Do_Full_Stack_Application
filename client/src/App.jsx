@@ -6,7 +6,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/api/v1/signup/" element={<Signup />} />
+        <Route path="/" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Landing />} />
       </Routes>

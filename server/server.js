@@ -11,14 +11,14 @@ const PORT = process.env.PORT || 3000;
 
 // CORS Options
 const corsOptions = {
-  origin: "http://localhost:5173", // Your React app's URL
+  origin: "http://localhost:5174", // Your React app's URL
   credentials: true, // Allow credentials (cookies) to be sent
 };
 
 const app = express();
-
+app.use(cors(corsOptions));
 app.use(express.json());
-app.use(cors(corsOptions)); // Use the configured CORS options
+// Use the configured CORS options
 app.use(cookieParser());
 // Connect to the database
 connectDB();

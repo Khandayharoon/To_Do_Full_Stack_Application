@@ -41,8 +41,12 @@ function Login() {
           },
         }
       );
+
       if (response.status === 200) {
         console.log("Login successful!", response.data);
+        const token = response.data.user.token;
+        // Store the token in localStorage (or sessionStorage)
+        localStorage.setItem("authToken", token); // Store token in localStorage
         navigate("/home"); // Navigate on successful login
       }
     } catch (error) {
