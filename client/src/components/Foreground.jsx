@@ -1,10 +1,48 @@
 import { useEffect, useRef, useState } from "react";
 import Card from "./card";
 import axios from "axios";
+import { useTodoContext } from "../Context";
+
+// function useTodo(n) {
+//   const [todos, setTodos] = useState([]);
+//   const [error, setError] = useState(null);
+//   function getData() {
+//     const token = localStorage.getItem("authToken");
+
+//     axios
+//       .get("http://localhost:8080/api/v1/gettodo", {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       })
+//       .then((response) => {
+//         console.log(response.data);
+//         setTodos(response.data);
+//         console.log("todos", todos);
+//       })
+//       .catch((error) => {
+//         console.error("Error fetching todos:", error);
+//         setError("Failed to fetch todos. Please try again.");
+//       });
+//   }
+//   useEffect(() => {
+//     const interval_ID = setInterval(() => {
+//       getData();
+//     }, n * 1000);
+//     getData();
+
+//     return () => {
+//       clearInterval(interval_ID);
+//     };
+//   }, [n]);
+
+//   return { todos,error };
+// }
 
 function Foreground() {
   const ref = useRef(null);
-  const [todos, setTodos] = useState([]);
+  // const [todos, setTodos] = useState([]);
+  const { todos, setTodos } = useTodoContext();
   const [error, setError] = useState(null);
 
   const colors = [
@@ -60,13 +98,14 @@ function Foreground() {
     "#FFE700",
   ];
 
+  // const {todos,error} = useTodo(5);
   useEffect(() => {
-    const token = localStorage.getItem("authToken"); // Retrieve token from localStorage
+    const token = localStorage.getItem("authToken");
 
     axios
       .get("http://localhost:8080/api/v1/gettodo", {
         headers: {
-          Authorization: `Bearer ${token}`, // Set token in the Authorization header
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
@@ -80,27 +119,16 @@ function Foreground() {
       });
   }, []);
 
-  // // Log todos state after it has been updated
-  // useEffect(() => {
-  //   console.log(todos);
-  // }, [todos]);
+  useEffect(() => {
+    console.log(todos);
+  }, [todos]);
 
   return (
     <div
       ref={ref}
-      className="fixed top-0 left-0 w-full h-full z-[4] flex gap-10 flex-wrap p-5"
+      className="top-0 left-0 w-full min-h-screen z-[4] flex gap-10 flex-wrap p-5"
     >
       {error && <div className="text-red-500">{error}</div>}{" "}
-      {/* Display error message */}
-      {/* Replace 'data' with 'todos' if fetching data from API */}
-      {/* {todos.length > 0
-        ? todos.map((todo) => (
-            <Card key={todo._id} data={todo}} reference={ref} />
-          ))
-        : // : data.map((item, index) => (
-          //     <Card key={index} data={item} reference={ref} />
-          //   ))}
-          null} */}
       {todos &&
         todos.length > 0 &&
         todos.map((todo) => (
@@ -116,67 +144,3 @@ function Foreground() {
 }
 
 export default Foreground;
-
-// import { useEffect, useRef, useState } from "react";
-// import Card from "./card";
-// import axios from "axios";
-
-// function Foreground() {
-//   const ref = useRef(null);
-//   const [todos, setTodos] = useState([]);
-
-//   const data = [
-//     {
-//       description: "Lorem ipsum dolor sit amet consectetur adipisicing Hk elit",
-//       fileSize: "0.9 Mb",
-//       close: true,
-//       tag: { isOpen: true, TagTitle: "Download Now", tagColor: "green" },
-//     },
-//     {
-//       description: "Lorem ipsum dolor sit amet consectetur adipisicing Hk elit",
-//       fileSize: "0.9 Mb",
-//       close: true,
-//       tag: { isOpen: true, TagTitle: "Download Now", tagColor: "blue" },
-//     },
-//     {
-//       description: "Lorem ipsum dolor sit amet consectetur adipisicing Hk elit",
-//       fileSize: "0.9 Mb",
-//       close: true,
-//       tag: { isOpen: true, TagTitle: "Download Now", tagColor: "green" },
-//     },
-//   ];
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const response = await axios.get(
-//           "http://localhost:8080/api/v1/gettodo"
-//         );
-//         setTodos(response.data); // Assuming the API returns a list of todos
-//         console.log(todos);
-//       } catch (error) {
-//         console.error("Error fetching todos:", error);
-//       }
-//     };
-
-//     fetchData();
-//   }, []);
-
-//   return (
-//     <div
-//       ref={ref}
-//       className="fixed top-0 left-0 w-full h-full z-[4] flex gap-10 flex-wrap p-5"
-//     >
-//       {/* Replace 'data' with 'todos' if fetching data from API */}
-//       {todos.length > 0
-//         ? todos.map((item, index) => (
-//             <Card key={index} data={item} reference={ref} />
-//           ))
-//         : data.map((item, index) => (
-//             <Card key={index} data={item} reference={ref} />
-//           ))}
-//     </div>
-//   );
-// }
-
-// export default Foreground;

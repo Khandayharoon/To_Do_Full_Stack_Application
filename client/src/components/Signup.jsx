@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Signup() {
-  const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+    setFirstName(e.target.value);
   };
 
   const handleEmailChange = (e) => {
@@ -23,7 +23,7 @@ function Signup() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const body = {
-      username,
+      firstName,
       email,
       password,
     };
@@ -53,15 +53,15 @@ function Signup() {
   };
 
   return (
-    <div className="bg-zinc-800 w-full h-screen flex items-center justify-center">
-      <div className="flex flex-col w-1/3 h-1/2 gap-10 p-10">
+    <div className="bg-zinc-800 w-full h-screen flex md:items-center md:justify-center">
+      <div className="flex flex-col w-full md:w-[750px] h-1/2  gap-10 p-10">
         <form onSubmit={handleFormSubmit} className="flex flex-col gap-5">
           <input
             className="py-4 indent-6 outline-none rounded-md text-lg"
-            placeholder="Username..."
+            placeholder="First Name..."
             required
             type="text"
-            value={username}
+            value={firstName}
             onChange={handleUsernameChange}
           />
           <input

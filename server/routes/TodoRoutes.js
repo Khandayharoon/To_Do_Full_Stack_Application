@@ -1,20 +1,17 @@
 const express = require("express");
 const router = express.Router();
 
-const { createTodo , gettodos } = require("../controllers/TodoController");
-const { authenticated } = require("../middlewares/Authentication"); 
+const {
+  createTodo,
+  gettodos,
+  deletetodo,
+} = require("../controllers/TodoController");
+const { authenticated } = require("../middlewares/Authentication");
 
+router.post("/createTodo", authenticated, createTodo);
 
-router.post("/", authenticated, createTodo);
+router.get("/gettodo", authenticated, gettodos);
 
-router.get("/", authenticated, gettodos);
-
+router.delete("/deletetodo", authenticated, deletetodo);
 
 module.exports = router;
-
-
-// {
-//     "username" : "Haroon",
-//     "email" : "haroon@gmail.com",
-//     "password" : "HK1234sufi@3"
-// }

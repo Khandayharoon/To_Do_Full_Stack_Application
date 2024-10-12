@@ -19,15 +19,15 @@ const createTodo = async (req, res) => {
 
     const userId = req.user._id;
 
-    console.log("User ID:", userId);
+    // console.log("User ID:", userId);
 
     const newTodo = await Todo.create({ title, description, user: userId });
-    res.status(201).json({
+    res.status(200).json({
       message: "Todo has been created",
       todo: newTodo,
     });
   } catch (e) {
-    console.error("Error:", e);
+    // console.error("Error:", e);
     res.status(500).json({ message: "Server error." });
   }
 };
@@ -35,7 +35,7 @@ const createTodo = async (req, res) => {
 const gettodos = async (req, res) => {
   try {
     const userid = req.user._id; // Assuming req.user._id is the ObjectId
-    console.log("User ID:", userid);
+    // console.log("User ID:", userid);
 
     // Cast userid to a valid ObjectId
     const todos = await Todo.find({
@@ -50,8 +50,32 @@ const gettodos = async (req, res) => {
 
     res.status(200).json(todos);
   } catch (e) {
-    console.error("Error:", e);
+    // console.error("Error:", e);
     res.status(500).json({ message: "Server error while fetching todos." });
   }
 };
-module.exports = { createTodo, gettodos };
+
+const deletetodo = async (req, res) => {
+  const id = req.query.id;
+
+  console.log("Todo ID to delete:", id);
+
+  try {
+    const deletedTodo = await Todo.findByIdAndDelete(id);
+
+    if (!deletedTodo) {
+      return res.status(404).json({ message: "Todo not found" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Todo deleted successfully", todo: deletedTodo });
+  } catch (error) {
+    console.error("Error deleting todo:", error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while deleting the todo" });
+  }
+};
+
+module.exports = { createTodo, gettodos, deletetodo };

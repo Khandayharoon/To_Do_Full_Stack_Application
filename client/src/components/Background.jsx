@@ -1,7 +1,7 @@
 function Background() {
   return (
     <>
-      <div className="fixed w-full h-screen">
+      <div className="fixed w-full  min-h-screen">
         <div className="absolute top-[5%] w-full py-10 flex justify-center text-zinc-700 font-bold text-x">
           !Documents
         </div>
