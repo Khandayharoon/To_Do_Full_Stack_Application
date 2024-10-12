@@ -42,13 +42,13 @@ const gettodos = async (req, res) => {
       user: new mongoose.Types.ObjectId(userid),
     });
 
-    console.log(todos);
+    // console.log(todos);
 
     if (todos.length === 0) {
       return res.status(200).json({ message: "No todos available." });
     }
 
-    res.status(200).json({ todos });
+    res.status(200).json(todos);
   } catch (e) {
     console.error("Error:", e);
     res.status(500).json({ message: "Server error while fetching todos." });
