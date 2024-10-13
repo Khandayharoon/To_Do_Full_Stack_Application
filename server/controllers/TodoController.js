@@ -58,7 +58,7 @@ const gettodos = async (req, res) => {
 const deletetodo = async (req, res) => {
   const id = req.query.id;
 
-  console.log("Todo ID to delete:", id);
+  // console.log("Todo ID to delete:", id);
 
   try {
     const deletedTodo = await Todo.findByIdAndDelete(id);
@@ -78,4 +78,38 @@ const deletetodo = async (req, res) => {
   }
 };
 
-module.exports = { createTodo, gettodos, deletetodo };
+const searchtodo = async (req, res) => {
+  try {
+    const { keyword, date, startDate, endDate } = req.query;
+    let query = { user: req.user._id }; // Filter by current user
+
+    // Search by keyword in title or description
+    if (keyword) {
+      query.$or = [
+        { title: { $regex: keyword, $options: "i" } },
+        { description: { $regex: keyword, $options: "i" } },
+      ];
+    }
+
+    // Date filtering logic
+    if (date) {
+      query.createdAt = {
+        $gte: new Date(date),
+        $lt: new Date(new Date(date).setDate(new Date(date).getDate() + 1)),
+      };
+    } else if (startDate && endDate) {
+      query.createdAt = {
+        $gte: new Date(startDate),
+        $lte: new Date(endDate),
+      };
+    }
+
+    const todos = await Todo.find(query);
+    res.status(200).json(todos);
+  } catch (error) {
+    console.error("Error fetching todos:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+module.exports = { createTodo, gettodos, deletetodo, searchtodo };

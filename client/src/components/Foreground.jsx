@@ -109,9 +109,9 @@ function Foreground() {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setTodos(response.data);
-        console.log("todos", todos);
+        // console.log("todos", todos);
       })
       .catch((error) => {
         console.error("Error fetching todos:", error);
@@ -120,7 +120,7 @@ function Foreground() {
   }, []);
 
   useEffect(() => {
-    console.log(todos);
+    // console.log(todos);
   }, [todos]);
 
   return (

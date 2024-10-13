@@ -12,8 +12,8 @@ function TodoContextProvider({ children }) {
   );
 }
 
-function useTodoContext(){
-    return useContext(TodoContext);
+function useTodoContext() {
+  return useContext(TodoContext);
 }
 
-export {TodoContextProvider ,useTodoContext}
+export { TodoContextProvider, useTodoContext };

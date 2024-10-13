@@ -11,16 +11,16 @@ const authenticated = async (req, res, next) => {
     const authHeader = req.headers["authorization"];
     if (authHeader && authHeader.startsWith("Bearer")) {
       token = authHeader.split(" ")[1]; // Extract token from "Bearer <token>"
-      console.log(authHeader);
-      console.log("header Token", token);
+      // console.log(authHeader);
+      // console.log("header Token", token);
     } else {
       // 2. Fallback to cookie-based token if header is not present
       token = req.cookies.token;
-      console.log("Cookies Token", token);
+      // console.log("Cookies Token", token);
     }
 
     // Log token for debugging
-    console.log("Received token:", token);
+    // console.log("Received token:", token);
 
     // 3. Check if token exists
     if (!token) {

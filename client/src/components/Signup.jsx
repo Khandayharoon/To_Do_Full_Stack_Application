@@ -51,7 +51,9 @@ function Signup() {
       }
     }
   };
-
+  const loginPage = () => {
+    navigate("/login");
+  };
   return (
     <div className="bg-zinc-800 w-full h-screen flex md:items-center md:justify-center">
       <div className="flex flex-col w-full md:w-[750px] h-1/2  gap-10 p-10">
@@ -80,13 +82,23 @@ function Signup() {
             value={password}
             onChange={handlePasswordChange}
           />
-          <div className="relative">
-            <button
-              className="bg-zinc-900 text-white px-6 py-2 rounded-lg absolute right-0 text-lg"
-              type="submit"
-            >
-              Sign Up
-            </button>
+          <div className="relative flex flex-col">
+            <div>
+              <button
+                className="bg-zinc-900 text-white px-6 py-2 rounded-lg absolute right-0 text-lg "
+                type="submit"
+              >
+                Sign Up
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={loginPage}
+                className=" bg-zinc-900 text-white px-6 py-2 rounded-lg absolute  text-lg"
+              >
+                Login
+              </button>
+            </div>
           </div>
         </form>
       </div>

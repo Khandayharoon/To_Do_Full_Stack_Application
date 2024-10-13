@@ -4,7 +4,7 @@ import { IoClose } from "react-icons/io5";
 import { motion } from "framer-motion";
 import DeleteButton from "./DeleteButton";
 function Card({ data, reference, color }) {
-  console.log(data);
+  // console.log(data);
   return (
     <motion.div
       drag

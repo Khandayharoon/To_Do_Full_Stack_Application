@@ -19,7 +19,7 @@ function CreateTodo({ setCreateTodo }) {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log({ title, description });
+    // console.log({ title, description });
     setCreateTodo(false);
 
     const body = { title, description };
