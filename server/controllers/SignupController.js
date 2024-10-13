@@ -8,21 +8,22 @@ const bcrypt = require("bcryptjs");
 const userZodSchema = zod.object({
   username: zod.string(),
   email: zod.string().email(),
-  password: zod
-    .string()
-    .min(8, { message: "Password must be at least 8 characters long." })
-    .refine((val) => /[A-Z]/.test(val), {
-      message: "Password must contain at least one uppercase letter.",
-    })
-    .refine((val) => /[0-9]/.test(val), {
-      message: "Password must contain at least one number.",
-    })
-    .refine((val) => /[a-z]/.test(val), {
-      message: "Password must contain at least one lowercase letter.",
-    })
-    .refine((val) => /[!@#$%^&*(),.?":{}|<>]/.test(val), {
-      message: "Password must contain at least one special character.",
-    }),
+  // password: zod
+  //   .string()
+  //   .min(8, { message: "Password must be at least 8 characters long." })
+  //   .refine((val) => /[A-Z]/.test(val), {
+  //     message: "Password must contain at least one uppercase letter.",
+  //   })
+  //   .refine((val) => /[0-9]/.test(val), {
+  //     message: "Password must contain at least one number.",
+  //   })
+  //   .refine((val) => /[a-z]/.test(val), {
+  //     message: "Password must contain at least one lowercase letter.",
+  //   })
+  //   .refine((val) => /[!@#$%^&*(),.?":{}|<>]/.test(val), {
+  //     message: "Password must contain at least one special character.",
+  //   }),
+  password: zod.string().min(8),
 });
 
 // Function to generate a JWT token
@@ -69,7 +70,7 @@ const SignUp = async (req, res) => {
       token: `Bearer ${token}`,
     });
   } catch (e) {
-    console.error("Error signing up user:", e);
+    // console.error("Error signing up user:", e);
     res.status(500).json({ message: "Server error." });
   }
 };
