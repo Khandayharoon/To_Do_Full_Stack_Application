@@ -61,7 +61,7 @@ const Login = async (req, res) => {
 
       return res.status(200).json({
         user: {
-          username: user.username, // Assuming username is part of the user object
+          firstName: user.firstName, // Assuming username is part of the user object
           email: user.email,
           token: token,
         },

@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs");
 
 // User validation schema
 const userZodSchema = zod.object({
-  username: zod.string(),
+  firstName: zod.string(),
   email: zod.string().email(),
   // password: zod
   //   .string()
@@ -41,13 +41,13 @@ const SignUp = async (req, res) => {
       .json({ errors: parseUserData.error.flatten().fieldErrors });
   }
 
-  const { username, email, password } = parseUserData.data;
+  const { firstName, email, password } = parseUserData.data;
 
   try {
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "User already exists." });
+      return res.status(401).json({ message: "User already exists." });
     }
 
     // Hash the password before saving
@@ -55,7 +55,7 @@ const SignUp = async (req, res) => {
 
     // Create a new user with hashed password
     const newUser = await User.create({
-      username,
+      firstName,
       email,
       password: hashedPassword,
     });
@@ -66,11 +66,10 @@ const SignUp = async (req, res) => {
     // Send response with user details and token
     res.status(200).json({
       message: "User created successfully",
-      user: { username, email }, // Do not expose the password
+      user: { firstName, email },
       token: `Bearer ${token}`,
     });
   } catch (e) {
-    // console.error("Error signing up user:", e);
     res.status(500).json({ message: "Server error." });
   }
 };

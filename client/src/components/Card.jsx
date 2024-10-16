@@ -1,6 +1,6 @@
 import { FaRegFileAlt } from "react-icons/fa";
-import { LuDownload } from "react-icons/lu";
-import { IoClose } from "react-icons/io5";
+// import { LuDownload } from "react-icons/lu";
+// import { IoClose } from "react-icons/io5";
 import { motion } from "framer-motion";
 import DeleteButton from "./DeleteButton";
 function Card({ data, reference, color }) {
@@ -19,14 +19,15 @@ function Card({ data, reference, color }) {
         <span style={{ color: color }}>Title:-</span> <br /> {data.title}
       </p>
       <p className="text-lg mt-5 leading-tight ">
-        <span style={{ color: color }}>Description:-</span> <br /> {data.description}
+        <span style={{ color: color }}>Description:-</span> <br />{" "}
+        {data.description}
       </p>
       <div className="footer absolute bottom-0 w-full   left-0">
         <div className="flex items-center justify-between px-8 py-3 mb-3">
           <h5>0.{Math.floor(Math.random() * 10)}MB</h5>
           <span className="w-7 h-7 rounded-full flex items-center justify-center bg-zinc-600 cursor-pointer">
             {/* {true ? <IoClose /> : <LuDownload size=".8em" color="#fff" />} */}
-            <DeleteButton id={data._id}/>
+            <DeleteButton id={data._id} />
           </span>
         </div>
         {true && (
@@ -35,6 +36,10 @@ function Card({ data, reference, color }) {
             style={{ background: color }}
           >
             <h3 className="text-sm font-semibold ">Download Now</h3>
+            {/* <select>
+              <option>Doing</option>
+              <option>Doing</option>
+            </select> */}
           </div>
         )}
       </div>
@@ -43,4 +48,3 @@ function Card({ data, reference, color }) {
 }
 
 export default Card;
-

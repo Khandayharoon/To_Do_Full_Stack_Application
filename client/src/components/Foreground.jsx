@@ -3,45 +3,9 @@ import Card from "./card";
 import axios from "axios";
 import { useTodoContext } from "../Context";
 
-// function useTodo(n) {
-//   const [todos, setTodos] = useState([]);
-//   const [error, setError] = useState(null);
-//   function getData() {
-//     const token = localStorage.getItem("authToken");
-
-//     axios
-//       .get("http://localhost:8080/api/v1/gettodo", {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       })
-//       .then((response) => {
-//         console.log(response.data);
-//         setTodos(response.data);
-//         console.log("todos", todos);
-//       })
-//       .catch((error) => {
-//         console.error("Error fetching todos:", error);
-//         setError("Failed to fetch todos. Please try again.");
-//       });
-//   }
-//   useEffect(() => {
-//     const interval_ID = setInterval(() => {
-//       getData();
-//     }, n * 1000);
-//     getData();
-
-//     return () => {
-//       clearInterval(interval_ID);
-//     };
-//   }, [n]);
-
-//   return { todos,error };
-// }
-
 function Foreground() {
   const ref = useRef(null);
-  // const [todos, setTodos] = useState([]);
+
   const { todos, setTodos } = useTodoContext();
   const [error, setError] = useState(null);
 
@@ -98,7 +62,6 @@ function Foreground() {
     "#FFE700",
   ];
 
-  // const {todos,error} = useTodo(5);
   useEffect(() => {
     const token = localStorage.getItem("authToken");
 
@@ -109,9 +72,7 @@ function Foreground() {
         },
       })
       .then((response) => {
-        // console.log(response.data);
         setTodos(response.data);
-        // console.log("todos", todos);
       })
       .catch((error) => {
         console.error("Error fetching todos:", error);
@@ -126,7 +87,7 @@ function Foreground() {
   return (
     <div
       ref={ref}
-      className="top-0 left-0 w-full min-h-screen z-[4] flex gap-10 flex-wrap p-5"
+      className="top-0 left-0 w-full min-h-screen z-[4] flex flex-col gap-10 flex-wrap p-5  sm:flex-col md:flex-row"
     >
       {error && <div className="text-red-500">{error}</div>}{" "}
       {todos &&

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useTodoContext } from "../Context";
 import { IoClose } from "react-icons/io5";
+import toast, { Toaster } from "react-hot-toast";
 
 function CreateTodo({ setCreateTodo }) {
   const [title, setTitle] = useState("");
@@ -41,7 +42,8 @@ function CreateTodo({ setCreateTodo }) {
       );
 
       if (response.status === 200) {
-        alert("Todo has been created successfully");
+        // alert("Todo has been created successfully");
+        toast.success("Todo has been created successfully");
         setTodos([{ ...body, _id: title }, ...todos]);
       }
     } catch (error) {
@@ -58,7 +60,7 @@ function CreateTodo({ setCreateTodo }) {
 
   return (
     <div className=" relative w-full h-full flex flex-col items-center justify-center">
-      <div className="w-7 h-7 rounded-full flex items-center justify-center bg-zinc-600  absolute top-0 right-2 cursor-pointer">
+      <div className="w-7 h-7 rounded-full flex items-center justify-center  bg-zinc-600  absolute top-0 right-2 cursor-pointer">
         <button onClick={CloseModel}>
           <IoClose />
         </button>
