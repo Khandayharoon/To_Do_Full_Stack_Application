@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 function Signup() {
   const [firstName, setFirstName] = useState("");
@@ -27,7 +28,7 @@ function Signup() {
       email,
       password,
     };
-    console.log("Sending signup data:", body);
+    // console.log("Sending signup data:", body);
 
     try {
       const response = await axios.post(
@@ -39,15 +40,18 @@ function Signup() {
           },
         }
       );
+
       if (response.status === 200) {
-        console.log("Signup successful!", response.data);
+        // console.log("Signup successful!", response.data);
         navigate("/login");
       }
     } catch (error) {
-      if (error.response) {
-        console.error("Signup failed:", error.response.data);
+      // Check if the error is from the server response
+      if (error.response && error.response.status === 401) {
+        toast.error("User already exists");
       } else {
-        console.error("Signup failed:", error.message);
+        console.error("Login failed:", error.message);
+        toast.error("An unexpected error occurred. Please try again.");
       }
     }
   };
@@ -78,7 +82,6 @@ function Signup() {
             className="py-4 indent-6 outline-none rounded-md text-lg"
             placeholder="Password..."
             required
-            // type="password" // Use type="password" to mask input
             value={password}
             onChange={handlePasswordChange}
           />

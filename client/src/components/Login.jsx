@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import toast, { Toaster } from "react-hot-toast";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,7 +29,7 @@ function Login() {
         "http://localhost:8080/api/v1/login", // Corrected the URL
         body,
         {
-          withCredentials: true, // Ensures cookies are sent in subsequent requests
+          withCredentials: true,
           headers: {
             "Content-Type": "application/json",
           },
@@ -37,16 +37,17 @@ function Login() {
       );
 
       if (response.status === 200) {
-        // console.log("Login successful!", response.data);
         const token = response.data.user.token;
-        localStorage.setItem("authToken", token); 
-        navigate("/home"); 
+        localStorage.setItem("authToken", token);
+        navigate("/home");
       }
     } catch (error) {
-      if (error.response) {
-        // console.error("Login failed:", error.response.data);
+      // Check if the error is from the server response
+      if (error.response && error.response.status === 401) {
+        toast.error("Invalid email or password");
       } else {
-        // console.error("Login failed:", error.message);
+        console.error("Login failed:", error.message);
+        toast.error("An unexpected error occurred. Please try again.");
       }
     }
   };
